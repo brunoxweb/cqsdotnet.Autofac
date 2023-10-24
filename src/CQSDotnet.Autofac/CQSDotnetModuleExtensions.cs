@@ -13,7 +13,7 @@ namespace CQSDotnet.Autofac
     {
         internal static ContainerBuilder CQSDotnetModuleRegister(this ContainerBuilder containerBuilder, Assembly[] assemblies)
         {
-            containerBuilder.Register(c => new TypeResolver(c.Resolve<IComponentContext>().Resolve)).As<ITypeResolver>().SingleInstance();
+            containerBuilder.RegisterType<AutofacTypeResolver>().As<ITypeResolver>().SingleInstance();
 
             foreach (var assembly in assemblies)
             {

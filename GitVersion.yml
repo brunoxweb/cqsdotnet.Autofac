@@ -1,5 +1,5 @@
-next-version: 1.0
-assembly-versioning-scheme: MajorMinor
+next-version: 1.1.0
+assembly-versioning-scheme: MajorMinorPatch
 mode: ContinuousDelivery
 branches:
   main:

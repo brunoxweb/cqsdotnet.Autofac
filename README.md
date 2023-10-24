@@ -17,7 +17,7 @@ Create an instance of the ContainerBuilder from the Autofac library in your appl
 
 ```
 var containerBuilder = new ContainerBuilder();
-containerBuilder.RegisterModule(new CQSDotnetModule());
+containerBuilder.RegisterModule(new CQSDotnetModule(AppDomain.CurrentDomain.GetAssemblies()));
 
 // Build the container
 var container = containerBuilder.Build();
@@ -62,6 +62,36 @@ public class MyCommand : ICommand { }
 public class MyCommandHandler : ICommandHandler<MyCommand> { }
 ```
 And that's it! You've successfully integrated CQSDotnet with Autofac in your application. Now you can use the CQS pattern to manage your commands and queries in a clean and organized way.
+
+## net6.0
+
+Add the package ``Autofac.Extensions.DependencyInjection``
+
+Register it in Program.cs file
+
+```
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Omitted for brevity
+
+        // Add AutofacServiceProviderFactory
+        builder.Host
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            // Register this module
+            .ConfigureContainer<ContainerBuilder>(cb => cb.RegisterModule(new CQSDotnetModule(AppDomain.CurrentDomain.GetAssemblies())));
+
+        var app = builder.Build();
+
+        // Omitted for brevity
+
+        app.Run();
+    }
+}
+```
 
 ## Support and Issues
 If you encounter any issues, have questions, or want to contribute, please visit the GitHub repository. We appreciate your feedback and contributions to help improve this library.
